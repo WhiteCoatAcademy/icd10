@@ -1,0 +1,20 @@
+<div class="container">
+
+<input ng-model="query"></input>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Code</th>
+				<th>Text</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody ng-show="query.length>2">
+			<tr ng-repeat = "code in codes | filter:query">
+				<td>{{code.code}}</td>
+				<td>{{code.text}}</td>
+				<td>{{code.description}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
