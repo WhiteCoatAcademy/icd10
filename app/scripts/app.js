@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('icd10App', [])
+angular.module('icd10App', ['ngRoute'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

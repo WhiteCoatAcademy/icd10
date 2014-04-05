@@ -2,10 +2,10 @@
 
 angular.module('icd10App')
   .controller('MainCtrl', function ($scope) {
-    $scope.query = "icd"
+    $scope.query = "B10.8"
     $scope.codes = [
-      {"code":"ICD1", "text":"Code one", "description":"Description 1"},
-      {"code":"ICD2", "text":"Code Two", "description":"Description 2"},
-      {"code":"ICD3", "text":"Code Three", "description":"Description 3"}
+      {"code":"B10.81", "text":"Human herpesvirus 6 infection", "description":"Infection by human herpesvirus 6"},
+      {"code":"B10.82", "text":"Human herpesvirus 7 infection", "description":"Infection by human herpesvirus 7"},
+      {"code":"B10.89", "text":"Other human herpesvirus infection", "description":"Applicable to human herpesvirus 8 infection or Kaposi's sarcoma-associated herpesvirus infection"}
     ];
   });
