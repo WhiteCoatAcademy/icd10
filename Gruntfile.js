@@ -28,6 +28,27 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     yeoman: yeomanConfig,
+    aws: grunt.file.readJSON('aws-keys.json'),
+    aws_s3: {
+      options: {
+        accessKeyId: '<%= aws.AWSAccessKeyId %>', // Use the variables
+        secretAccessKey: '<%= aws.AWSSecretKey %>', // You can also use env variables
+        // region: 'eu-west-1',
+        uploadConcurrency: 5, // 5 simultaneous uploads
+        downloadConcurrency: 5 // 5 simultaneous downloads
+    },
+	prod: {
+            options: {
+		bucket: 'icd10.clindesk.org',
+		differential: true // Only uploads the files that have changed
+            },
+            files: [
+		{dest: '/', cwd: 'backup/prod/', action: 'download'},
+		{dest: '/', differential:false, action: 'delete'},
+		{expand: true, cwd: 'dist/', src: ['**'], dest: ''}
+            ]
+	}
+    },
     watch: {
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
@@ -352,6 +373,10 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin'
+  ]);
+
+  grunt.registerTask('prod', [
+    'aws_s3:prod'
   ]);
 
   grunt.registerTask('default', [
