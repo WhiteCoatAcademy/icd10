@@ -1,3 +1,7 @@
+*.pyc
+.DS_Store
+.awskey
+.idea
 *~
 node_modules
 backup
@@ -6,4 +10,3 @@ dist
 .sass-cache
 app/bower_components
 aws-keys.json
-
