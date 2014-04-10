@@ -1,5 +1,5 @@
 <div class="page-header">
-	<h1>Find a code, improve billing!</h1>
+	<h1>ICD-10 Code Lookup</h1>
 </div>
 <h3>Search: </h3>
 <input type="text" class="form-control" ng-model="query"></input>
@@ -8,15 +8,13 @@
 	<thead>
 		<tr>
 			<th>Code</th>
-			<th>Text</th>
 			<th>Description</th>
 		</tr>
 	</thead>
-	<tbody ng-show="query.length>2">
+	<tbody ng-if="query.length>2">
 		<tr ng-repeat = "code in codes | filter:query">
-			<td>{{code.code}}</td>
-			<td>{{code.text}}</td>
-			<td>{{code.description}}</td>
+			<td>{{code.c}}</td>
+			<td>{{code.d}}</td>
 		</tr>
 	</tbody>
 </table>
