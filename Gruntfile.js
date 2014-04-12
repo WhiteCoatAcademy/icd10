@@ -273,7 +273,19 @@ module.exports = function (grunt) {
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*'
           ]
-        }, {
+        },
+        // include the temporary data too
+        // as a placeholder put data in a data folder
+        {
+          expand: true,
+          dot: true,
+          cwd: 'code-parsing',
+          dest: '<%= yeomen.dist %>/data'
+          src: [
+            'temporary-codes.json'
+          ]
+        },
+        {
           expand: true,
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/images',
