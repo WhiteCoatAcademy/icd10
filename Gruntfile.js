@@ -280,7 +280,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: 'code-parsing',
-          dest: '<%= yeomen.dist %>/data'
+          dest: '<%= yeomen.dist %>/data',
           src: [
             'temporary-codes.json'
           ]
