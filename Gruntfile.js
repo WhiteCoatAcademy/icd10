@@ -274,17 +274,6 @@ module.exports = function (grunt) {
             'styles/fonts/*'
           ]
         },
-        // include the temporary data too
-        // as a placeholder put data in a data folder
-        {
-          expand: true,
-          dot: true,
-          cwd: 'code-parsing',
-          dest: '<%= yeomen.dist %>/data',
-          src: [
-            'temporary-codes.json'
-          ]
-        },
         {
           expand: true,
           cwd: '.tmp/images',
@@ -299,12 +288,22 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      data: {
+          expand: true,
+          dot: true,
+          cwd: 'code-parsing',
+          dest: '<%= yeoman.app %>/data',
+          src: [
+            'temp-codes.json'
+          ]
       }
     },
     concurrent: {
       server: [
         'coffee:dist',
-        'copy:styles'
+        'copy:styles',
+        'copy:data'
       ],
       test: [
         'coffee',
@@ -313,6 +312,7 @@ module.exports = function (grunt) {
       dist: [
         'coffee',
         'copy:styles',
+        'copy:data',
         'imagemin',
         'svgmin',
         'htmlmin'
