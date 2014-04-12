@@ -2,19 +2,31 @@
 	<h1>ICD-10 Code Lookup</h1>
 </div>
 <h3>Search: </h3>
-<input type="text" class="form-control" ng-model="query"></input>
-<h3>Results: </h3>
-<table class="table">
-	<thead>
-		<tr>
-			<th>Code</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody ng-if="query.length>2">
-		<tr ng-repeat = "code in codes | filter:query">
-			<td>{{code.c}}</td>
-			<td>{{code.d}}</td>
-		</tr>
-	</tbody>
-</table>
+<form role="form">
+  <div class="form-group">
+		<input type="text" class="form-control" ng-model="query"
+		ng-debounce="200"></input>
+		<p ng-show="query.length<3" class="help-block">Search string must be 3 or more characters</p>
+	</div>
+</form>
+<div ng-show="query.length>2">
+	<h3>Results ({{filtered.length}})</h3>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Code</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat = "code in filtered = (codes | filter: query) | limitTo:currentLimit">
+				<td>{{code.c}}</td>
+				<td>{{code.d}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div ng-show="filtered.length>currentLimit">
+	{{filtered.length - currentLimit}} more
+	<button type="button" class="btn btn-default btn-med"
+		ng-click="currentLimit=currentLimit+20">Show more .. </button>
+</div>
