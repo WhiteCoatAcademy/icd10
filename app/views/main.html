@@ -10,7 +10,7 @@
 	</div>
 </form>
 <div ng-show="query.length>2">
-	<h3>Results ({{filtered.length}})</h3>
+	<h3>Results ({{filtered.length}}), {{search_times[1]-search_times[0]}} ms</h3>
 	<table class="table">
 		<thead>
 			<tr>
@@ -19,7 +19,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat = "code in filtered = (codes | andFilter: query) | limitTo:currentLimit">
+			<tr ng-repeat = "code in filtered">
 				<td>{{code.c}}</td>
 				<td>{{code.d}}</td>
 			</tr>
