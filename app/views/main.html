@@ -19,7 +19,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat = "code in filtered = (codes | filter: query) | limitTo:currentLimit">
+			<tr ng-repeat = "code in filtered = (codes | andFilter: query) | limitTo:currentLimit">
 				<td>{{code.c}}</td>
 				<td>{{code.d}}</td>
 			</tr>
