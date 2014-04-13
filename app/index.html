@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title>ICD-10 Code Lookup and Search &mdash; by Clindesk, Inc.</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -44,8 +44,12 @@
        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-       ga('create', 'UA-XXXXX-X');
+       ga('create', 'UA-32988270-1', {'cookieDomain': 'clindesk.org',
+           'siteSpeedSampleRate': 100});
+       ga('require', 'linkid', 'linkid.js');
        ga('send', 'pageview');
+
+       window.onerror = function(m, u, l) { ga('send', 'event', 'JSError', m, u + ':' + l, null, {'nonInteraction': 1}); };
     </script>
 
     <!-- ref:js //ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js -->
