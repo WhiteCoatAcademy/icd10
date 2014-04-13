@@ -258,6 +258,13 @@ module.exports = function (grunt) {
         }]
       }
     },
+    // htmlrefs is a plugin for replacing (or removing) references to non-optimized scripts or stylesheets on HTML files.
+    htmlrefs: {
+      dist: {
+        src: '<%= yeoman.dist %>/index.html',
+        dest: '<%= yeoman.dist %>/index.html'
+      }
+    },
     // Put files not handled in other tasks here
     copy: {
       dist: {
@@ -297,6 +304,16 @@ module.exports = function (grunt) {
           src: [
             'temp-codes.json'
           ]
+      },
+      // NOT SO DRY here, sorry
+      dist_data: {
+          expand: true,
+          dot: true,
+          cwd: 'code-parsing',
+          dest: '<%= yeoman.dist %>/data',
+          src: [
+            'temp-codes.json'
+          ]
       }
     },
     concurrent: {
@@ -312,7 +329,7 @@ module.exports = function (grunt) {
       dist: [
         'coffee',
         'copy:styles',
-        'copy:data',
+        'copy:dist_data',
         'imagemin',
         'svgmin',
         'htmlmin'
@@ -324,6 +341,9 @@ module.exports = function (grunt) {
         singleRun: true
       }
     },
+    // seems like cdnify is not working for angular 1.2
+    // due to some bug in what things are listed, there are
+    // pending issues for this, so we will use htmlrefs instead
     cdnify: {
       dist: {
         html: ['<%= yeoman.dist %>/*.html']
@@ -380,7 +400,8 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'copy:dist',
-    'cdnify',
+    'htmlrefs',
+    // 'cdnify',
     'ngmin',
     'cssmin',
     'uglify',
