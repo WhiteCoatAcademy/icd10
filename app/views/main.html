@@ -19,7 +19,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat = "code in filtered">
+			<tr ng-repeat = "code in filtered |limitTo:currentLimit">
 				<td>{{code.c}}</td>
 				<td>{{code.d}}</td>
 			</tr>

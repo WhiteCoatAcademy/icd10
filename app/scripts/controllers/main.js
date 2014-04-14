@@ -5,6 +5,7 @@ angular.module('icd10App')
         $scope.query = "";
         $scope.currentLimit = 20;
         $scope.codes = [];
+        $scope.totalResults = 0;
         $scope.filtered = [];
 
 
@@ -21,8 +22,7 @@ angular.module('icd10App')
         $scope.search_times = [0,0];
         $scope.$watch('query', function(newVal, oldVal){
           $scope.search_times[0] = Date.now();
-          var tmp = filterFilter($scope.codes, $scope.query)
-          $scope.filtered = limitToFilter(tmp, $scope.currentLimit);
+          $scope.filtered = filterFilter($scope.codes, $scope.query)
           $scope.search_times[1] = Date.now();
         })
     });
