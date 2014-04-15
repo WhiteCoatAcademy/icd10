@@ -47,6 +47,7 @@
        ga('create', 'UA-32988270-1', {'cookieDomain': 'clindesk.org',
            'siteSpeedSampleRate': 100});
        ga('require', 'linkid', 'linkid.js');
+       ga('require', 'displayfeatures');
        ga('send', 'pageview');
 
        window.onerror = function(m, u, l) { ga('send', 'event', 'JSError', m, u + ':' + l, null, {'nonInteraction': 1}); };
