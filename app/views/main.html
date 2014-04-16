@@ -4,8 +4,7 @@
 <h3>Search: </h3>
 <form role="form">
   <div class="form-group">
-		<input type="text" class="form-control" ng-model="query"
-		ng-debounce="200"></input>
+		<input type="text" class="form-control" ng-model="query" ng-debounce="200"/>
 		<p ng-show="query.length<3" class="help-block">Search string must be 3 or more characters</p>
 	</div>
 </form>
