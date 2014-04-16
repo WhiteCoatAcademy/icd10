@@ -1,5 +1,5 @@
 angular.module('icd10App').constant('API', {
-  url: "data/temp-codes.json",
+  url: "data/diagnosis_parents.json",
   params: {
   }
 });
