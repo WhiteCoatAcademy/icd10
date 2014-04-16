@@ -32,7 +32,8 @@ BORING_WORDS = ['and', 'or', 'of', 'on', 'the', 'due', 'to', 'in', 'with', 'with
 def non_boring_words(in_desc):
     clean_desc = re.sub('[^A-Za-z0-9\s]+', '', in_desc)
     each_word = clean_desc.split()
-    lower_case = [l.lower() for l in each_word]
+    long_words = [w for w in each_word if len(w) > 1]  # Ignore single characters.
+    lower_case = [l.lower() for l in long_words]
     good_words = [str(w) for w in lower_case if w not in BORING_WORDS]
     return good_words
 
@@ -54,9 +55,14 @@ with open(in_tsv,'rb') as tsvin:
         if row[2] == "0":  # Parent
             if working_parent != None:
                 # We have a new parent. Let's add the old one to the array.
-                working_parent['k'] = list(keywords)
-                working_parent['m'] = list_of_children
-                parents.append(working_parent)
+
+                # There are some "super parents" -- ignore them for now.
+                # 00110   A18     0       Tuberculosis of other organs
+                # 00111   A180    0       Tuberculosis of bones and joints
+                if len(list_of_children) > 0:
+                    working_parent['k'] = list(keywords)
+                    working_parent['m'] = list_of_children
+                    parents.append(working_parent)
                 keywords = set()
 
             working_parent = {'c': row[1], 'd': description}  # Temporary, later added to parents
@@ -77,5 +83,5 @@ with open(in_tsv,'rb') as tsvin:
     parents.append(working_parent)
 
 
-# print(json.dumps(parents))
-print(json.dumps(children, sort_keys=True))
+print(json.dumps(parents))
+# print(json.dumps(children, sort_keys=True))
