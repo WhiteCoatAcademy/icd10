@@ -12,12 +12,10 @@ angular.module('icd10App')
     // placeholder for some action directed towards a server...
     // params.ACTION = 'getICD10JSON';
     return {
-      fetchFromAPI: function(codeId){
+      fetchFromAPI: function(codeSet){
         // this is where we can check local storage for relevant data
         // var currentCode = localStorage.getItem('code_' + codeId);
-        // placeholder for when we passs codeId to the server
-        params['codeId'] = codeId;
-        return $http({url:API.url, params:params, method:'get'}).then(function(response){
+        return $http({url:API.urls[codeSet], params:params, method:'get'}).then(function(response){
             var data;
             if(response.status != 204) {
                 data = response.data;
@@ -30,16 +28,16 @@ angular.module('icd10App')
             return data;
         });
       },
-      fetchFromLocalStorage: function(codeId){
+      fetchFromLocalStorage: function(codeSet){
         // this is where we can extract data from a localStorage service
         // return localStorage.getItem('code_' + codeId).then(function(data){
           // return JSON.parse(data);
         // });
       },
-      get: function(codeId){
+      get: function(codeSet){
         // this can be further wrapped in services if we cut upp a call for a code
         // into multiple requests. For now, it's just a direct call
-        return this[navigator.onLine ? 'fetchFromAPI' : 'fetchFromLocalStorage'](codeId);
+        return this[navigator.onLine ? 'fetchFromAPI' : 'fetchFromLocalStorage'](codeSet);
       }
 
       // TODO: other call to the API could be defined here, or could go into a different service

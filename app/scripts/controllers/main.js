@@ -9,7 +9,7 @@ angular.module('icd10App')
         $scope.filtered = [];
 
 
-        CodeRetriever.get().then(function(data){
+        CodeRetriever.get('diagnosis_parents').then(function(data){
           $scope.codes = data;
         });
         // get the filter steps into controller,
@@ -25,4 +25,10 @@ angular.module('icd10App')
           $scope.filtered = filterFilter($scope.codes, $scope.query)
           $scope.search_times[1] = Date.now();
         })
+
+        // Get child codes later on.
+        CodeRetriever.get('diagnosis_children').then(function(data){
+          $scope.dx_children = data;
+        });
+
     });
