@@ -7,6 +7,7 @@ angular.module('icd10App')
       if(queryString){
         var queryParts = queryString.split(' ');
         angular.forEach(queryParts, function(value, key){
+          // TODO: make this modular.
           results = filterFilter(results, {'k': value});
         });
       }
