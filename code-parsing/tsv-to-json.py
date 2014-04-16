@@ -17,26 +17,65 @@ import csv
 import json
 import sys
 import os
+import re
 
 in_tsv = sys.argv[1]
 assert(os.path.isfile(in_tsv))
 
-parents = {}
+parents = []
 children = {}
+
+# Exclude from search keywords
+BORING_WORDS = ['and', 'or', 'of', 'on', 'the', 'due', 'to', 'in', 'with', 'without', 'disease']
+
+# Make lowercase, remove special characters, filter boring words.
+def non_boring_words(in_desc):
+    clean_desc = re.sub('[^A-Za-z0-9\s]+', '', in_desc)
+    each_word = clean_desc.split()
+    lower_case = [l.lower() for l in each_word]
+    good_words = [str(w) for w in lower_case if w not in BORING_WORDS]
+    return good_words
+
 
 with open(in_tsv,'rb') as tsvin:
     tsvin = csv.reader(tsvin, delimiter=str('\t'))
-    list_of_children = []
+    list_of_children = []  # Temporarily hold parent->child mapping
+    working_parent = None
+    keywords = set()
     for row in tsvin:
-        if row[2] == "0":
-            parents[row[1]] = [row[3], row[4], list_of_children]
+        # Search keywords
+
+
+        # Choose "long" description, if available
+        description = row[3]
+        if len(row[4]) > len(row[3]):
+            description = row[4]
+
+        if row[2] == "0":  # Parent
+            if working_parent != None:
+                # We have a new parent. Let's add the old one to the array.
+                working_parent['k'] = list(keywords)
+                working_parent['m'] = list_of_children
+                parents.append(working_parent)
+                keywords = set()
+
+            working_parent = {'c': row[1], 'd': description}  # Temporary, later added to parents
+            [keywords.add(word) for word in non_boring_words(description)]
             list_of_children = []
         elif row[2] == "1":
-            children[row[1]] = [row[3], row[4]]
+            [keywords.add(word) for word in non_boring_words(description)]
+            # children[row[1]] = {'d': description} # If we want to expand, later
+            children[row[1]] = description
             list_of_children.append(row[1])
         else:
             print(row[2])
             assert(False)
 
-print(json.dumps(parents, sort_keys=True))
-#print(json.dumps(children, sort_keys=True))
+    # Messy, but catch the last parent.
+    working_parent['k'] = list(keywords)
+    working_parent['m'] = list_of_children
+    parents.append(working_parent)
+
+
+# print(json.dumps(parents))
+print(json.dumps(children, sort_keys=True))
