@@ -60,7 +60,7 @@ with open(in_tsv,'rb') as tsvin:
                 # 00110   A18     0       Tuberculosis of other organs
                 # 00111   A180    0       Tuberculosis of bones and joints
                 if len(list_of_children) > 0:
-                    working_parent['k'] = list(keywords)
+                    working_parent['k'] = ' '.join(keywords)
                     working_parent['m'] = list_of_children
                     parents.append(working_parent)
                 keywords = set()
@@ -78,7 +78,7 @@ with open(in_tsv,'rb') as tsvin:
             assert(False)
 
     # Messy, but catch the last parent.
-    working_parent['k'] = list(keywords)
+    working_parent['k'] = ' '.join(keywords)
     working_parent['m'] = list_of_children
     parents.append(working_parent)
 
