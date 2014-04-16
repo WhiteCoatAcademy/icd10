@@ -19,10 +19,15 @@ angular.module('icd10App')
         var limitToFilter = $filter('limitTo');
         // may want to orderBy eventually, here is the filter
         var orderByFilter = $filter('orderBy');
+
+        // TODO: Modularize or clean this later?
+        // Since we filter these words when generating keyword lists, you can't really search for them (!).
+        var boringWords = new RegExp("\\b(?:and|or|of|on|the|due|to|in|with|without|disease)\\b", "gi");
+
         $scope.search_times = [0,0];
         $scope.$watch('query', function(newVal, oldVal){
           $scope.search_times[0] = Date.now();
-          $scope.filtered = filterFilter($scope.codes, $scope.query)
+          $scope.filtered = filterFilter($scope.codes, $scope.query.replace(boringWords, ''));
           $scope.search_times[1] = Date.now();
         });
 
