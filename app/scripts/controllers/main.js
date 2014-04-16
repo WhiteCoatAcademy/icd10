@@ -24,11 +24,18 @@ angular.module('icd10App')
           $scope.search_times[0] = Date.now();
           $scope.filtered = filterFilter($scope.codes, $scope.query)
           $scope.search_times[1] = Date.now();
-        })
+        });
+
+        // Awesome toggle hack, via:
+        // https://stackoverflow.com/questions/17544048/multi-level-tables-inside-another-if-clicked
+        $scope.toggleChildren = function($index) {
+            $scope.activePosition = $scope.activePosition == $index ? -1 : $index;
+        };
 
         // Get child codes later on.
         CodeRetriever.get('diagnosis_children').then(function(data){
           $scope.dx_children = data;
         });
+
 
     });
