@@ -17,15 +17,13 @@
 				<th>Description</th>
 			</tr>
 		</thead>
-		<tbody ng-repeat = "code in filtered | limitTo:currentLimit">
-			<tr ng-click="toggleChildren($index)">
+		<tbody >
+			<tr ng-click="toggleChildren($index)" ng-repeat-start = "code in filtered | limitTo:currentLimit">
 				<td>{{code.c}}</td>
 				<td>{{code.d}}</td>
 			</tr>
-            <tr class="child-row" ng-show="activePosition == $index">
-                <td>children here</td>
-                <td>children here</td>
-            </tr>
+      <tr class="child-row" code-children ng-repeat-end ng-show="activePosition == $index">
+      </tr>
 		</tbody>
 	</table>
 	<div ng-show="filtered.length>currentLimit">
