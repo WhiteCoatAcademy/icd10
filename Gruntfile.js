@@ -51,9 +51,10 @@ module.exports = function (grunt) {
                         params: {CacheControl: '3600'}},
 
                     // Upload big JSON data files with a 1 day cache time
+                    // Manually set the GZIP header, since we custom gzip these files below.
                     // TODO: Increase cache time
                     {expand: true, cwd: 'dist/data/', src: ['**'], dest: 'data/',
-                        params: {CacheControl: '86400'}}
+                        params: {CacheControl: '86400', 'ContentType': 'gzip'}}
 
                 ]
             }
@@ -316,16 +317,21 @@ module.exports = function (grunt) {
                     'diagnosis_children.json'
                 ]
             },
-            // NOT SO DRY here, sorry
-            // WARNING: These files are .gzipped (!)
+        },
+        compress: {
+            // AWS is terrible at opportunistic gzip
+            // gzip these files, but DON'T change their extension
+            // Instead, we overwrite their Content-Type header on the S3 push.
+            // TODO: Remove this if S3/CloudFront ever does auto-gzip.
             dist_data: {
-                expand: true,
-                dot: true,
-                cwd: 'code-parsing',
-                dest: '<%= yeoman.dist %>/data',
-                src: [
-                    'diagnosis_parents.json',
-                    'diagnosis_children.json'
+                options: { mode: 'gzip' },
+                files: [
+                    {expand: true,
+                        cwd: 'code-parsing',
+                        src: ['diagnosis_parents.json',
+                            'diagnosis_children.json'],
+                        dest: '<%= yeoman.dist %>/data',
+                        ext: '.json'}
                 ]
             }
         },
@@ -342,7 +348,7 @@ module.exports = function (grunt) {
             dist: [
                 'coffee',
                 'copy:styles',
-                'copy:dist_data',
+                'compress:dist_data',
                 'imagemin',
                 'svgmin',
                 'htmlmin'
