@@ -8,7 +8,8 @@ angular.module('icd10App')
         $scope.totalResults = 0;
         $scope.filtered = [];
 
-
+        $scope.parentDataLoaded = false;
+        $scope.childrenDataLoaded = false;
         CodeRetriever.get('diagnosis_parents').then(function(data){
             $scope.codes = data;
             // this can be cleaned up as a chain of promises
@@ -19,9 +20,6 @@ angular.module('icd10App')
             });
         });
 
-        // get the filter steps into controller,
-        // so tht it can be controlled by a watcher
-        // and not be defined by the ng-repeat digest cycle
         var andFilter = $filter('andFilter');
         var boringWordsFilter = $filter('boringWords');
         var limitToFilter = $filter('limitTo');
