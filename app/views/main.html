@@ -9,25 +9,34 @@
 	</div>
 </form>
 <div ng-show="query.length>2">
-	<h3>Results ({{filtered.length}}), {{search_times[1]-search_times[0]}} ms</h3>
-	<table class="table">
-		<thead>
-			<tr>
-				<th class="col-md-1">Code</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody >
-			<tr ng-click="toggleChildren($index)" ng-repeat-start = "code in filtered | limitTo:currentLimit">
-				<td>{{code.c}}</td>
-				<td>{{code.d}}</td>
-			</tr>
-      <tr class="child-row" code-children ng-repeat-end ng-if="activePosition == $index">
-      </tr>
-		</tbody>
-	</table>
-	<div ng-show="filtered.length>currentLimit">
-	{{filtered.length - currentLimit}} more
-	<button type="button" class="btn btn-default btn-med"
-		ng-click="currentLimit=currentLimit+20">Show more .. </button>
+
+	<i ng-show="!parentDataLoaded" class="fa fa-spinner fa-spin"></i>
+
+	<div ng-show="parentDataLoaded">
+		<h3>Results ({{filtered.length}}), {{search_times[1]-search_times[0]}} ms</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="col-md-1">Code</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody >
+				<tr ng-click="codeChildVisible=!codeChildVisible" ng-repeat-start = "code in filtered | limitTo:currentLimit track by $index">
+					<td>{{code.c}}</td>
+					<td>{{code.d}}</td>
+				</tr>
+	      <tr class="child-row" code-children ng-show="codeChildVisible && childrenDataLoaded">
+	      </tr>
+	      <tr ng-show="codeChildVisible && !childrenDataLoaded" ng-repeat-end>
+	      	<td col-width="2"><i class="fa fa-spinner fa-spin"></i></td>
+	      </tr>
+			</tbody>
+		</table>
+		<div ng-show="filtered.length>currentLimit">
+		{{filtered.length - currentLimit}} more
+			<button type="button" class="btn btn-default btn-med"
+			ng-click="currentLimit=currentLimit+20">Show more .. </button>
+		</div>
+	</div>
 </div>
