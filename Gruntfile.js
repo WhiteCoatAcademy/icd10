@@ -45,7 +45,16 @@ module.exports = function (grunt) {
                 files: [
                     {dest: '/', cwd: 'backup/prod/', action: 'download'},
                     {dest: '/', differential:false, action: 'delete'},
-                    {expand: true, cwd: 'dist/', src: ['**'], dest: ''}
+
+                    // Upload all files (except big JSON data) w/ a 1 hour cache time
+                    {expand: true, cwd: 'dist/', src: ['**', "!data/*"], dest: '',
+                        params: {CacheControl: '3600'}},
+
+                    // Upload big JSON data files with a 1 day cache time
+                    // TODO: Increase cache time
+                    {expand: true, cwd: 'dist/data/', src: ['**'], dest: 'data/',
+                        params: {CacheControl: '86400'}}
+
                 ]
             }
         },
@@ -303,17 +312,20 @@ module.exports = function (grunt) {
                 cwd: 'code-parsing',
                 dest: '<%= yeoman.app %>/data',
                 src: [
-                    'temp-codes.json'
+                    'diagnosis_parents.json',
+                    'diagnosis_children.json'
                 ]
             },
             // NOT SO DRY here, sorry
+            // WARNING: These files are .gzipped (!)
             dist_data: {
                 expand: true,
                 dot: true,
                 cwd: 'code-parsing',
                 dest: '<%= yeoman.dist %>/data',
                 src: [
-                    'temp-codes.json'
+                    'diagnosis_parents.json',
+                    'diagnosis_children.json'
                 ]
             }
         },
