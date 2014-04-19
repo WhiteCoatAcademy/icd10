@@ -22,7 +22,7 @@
 				<td>{{code.c}}</td>
 				<td>{{code.d}}</td>
 			</tr>
-      <tr class="child-row" code-children ng-repeat-end ng-show="activePosition == $index">
+      <tr class="child-row" code-children ng-repeat-end ng-if="activePosition == $index">
       </tr>
 		</tbody>
 	</table>
