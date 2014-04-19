@@ -12,11 +12,11 @@ angular.module('icd10App')
         // with $broadcast of loading events. That is better if there are multiple controllers
         // or if we want global awareness of loading
         // for now, this is a reasonable simple solution
-        $scope.parentDataLoaded = false;
-        $scope.childrenDataLoaded = false;
+        $scope.isParentDataLoaded = false;
+        $scope.isChildrenDataLoaded = false;
         CodeRetriever.get('diagnosis_parents').then(function(data){
           $scope.codes = data;
-          $scope.parentDataLoaded = true;
+          $scope.isParentDataLoaded = true;
           $scope.updateResults($scope.query, "");
           // this can be cleaned up as a chain of promises
           // but the way you had it before, both files
@@ -26,7 +26,7 @@ angular.module('icd10App')
             // if we instead only loaded those children whose parents were clicked on
             // then the approach would be different;
             $scope.dx_children = data;
-            $scope.childrenDataLoaded = true;
+            $scope.isChildrenDataLoaded = true;
           });
         });
 

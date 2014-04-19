@@ -10,9 +10,9 @@
 </form>
 <div ng-show="query.length>2">
 
-	<i ng-show="!parentDataLoaded" class="fa fa-spinner fa-spin"></i>
+	<i ng-show="!isParentDataLoaded" class="fa fa-spinner fa-spin"></i>
 
-	<div ng-show="parentDataLoaded">
+	<div ng-show="isParentDataLoaded">
 		<h3>Results ({{filtered.length}}), {{search_times[1]-search_times[0]}} ms</h3>
 		<table class="table">
 			<thead>
@@ -22,13 +22,13 @@
 				</tr>
 			</thead>
 			<tbody >
-				<tr ng-click="codeChildVisible=!codeChildVisible" ng-repeat-start = "code in filtered | limitTo:currentLimit track by $index">
+				<tr ng-click="isCodeChildVisible=!isCodeChildVisible" ng-repeat-start = "code in filtered | limitTo:currentLimit track by $index">
 					<td>{{code.c}}</td>
 					<td>{{code.d}}</td>
 				</tr>
-	      <tr class="child-row" code-children ng-show="codeChildVisible && childrenDataLoaded">
+	      <tr class="child-row" code-children ng-show="isCodeChildVisible && isChildrenDataLoaded">
 	      </tr>
-	      <tr ng-show="codeChildVisible && !childrenDataLoaded" ng-repeat-end>
+	      <tr ng-show="isCodeChildVisible && !isChildrenDataLoaded" ng-repeat-end>
 	      	<td col-width="2"><i class="fa fa-spinner fa-spin"></i></td>
 	      </tr>
 			</tbody>
