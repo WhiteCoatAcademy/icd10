@@ -8,16 +8,26 @@ angular.module('icd10App')
         $scope.totalResults = 0;
         $scope.filtered = [];
 
+        // we are binding to scope variables here, but this kind of thing can be handled
+        // with $broadcast of loading events. That is better if there are multiple controllers
+        // or if we want global awareness of loading
+        // for now, this is a reasonable simple solution
         $scope.parentDataLoaded = false;
         $scope.childrenDataLoaded = false;
         CodeRetriever.get('diagnosis_parents').then(function(data){
-            $scope.codes = data;
-            // this can be cleaned up as a chain of promises
-            // but the way you had it before, both files
-            // would have been called as part of the main thread!
-            CodeRetriever.get('diagnosis_children').then(function(data){
-                $scope.dx_children = data;
-            });
+          $scope.codes = data;
+          $scope.parentDataLoaded = true;
+          $scope.updateResults($scope.query, "");
+          // this can be cleaned up as a chain of promises
+          // but the way you had it before, both files
+          // would have been called as part of the main thread!
+          CodeRetriever.get('diagnosis_children').then(function(data){
+            // right now we are loading ALL children diagnoses
+            // if we instead only loaded those children whose parents were clicked on
+            // then the approach would be different;
+            $scope.dx_children = data;
+            $scope.childrenDataLoaded = true;
+          });
         });
 
         var andFilter = $filter('andFilter');
@@ -27,24 +37,18 @@ angular.module('icd10App')
         var orderByFilter = $filter('orderBy');
 
         $scope.search_times = [0,0];
-        var cleanQuery;
         $scope.$watch('query', function(newVal, oldVal){
-            cleanQuery = boringWordsFilter($scope.query);
-            // only do the filter if the filtered query (without boring words)
-            if(cleanQuery !== boringWordsFilter(oldVal)){
-                $scope.search_times[0] = Date.now();
-                $scope.filtered = andFilter($scope.codes, cleanQuery);
-                $scope.search_times[1] = Date.now();
-                $location.search('q', cleanQuery);
-            }
+          $scope.updateResults(newVal, oldVal)
         });
 
-        // Better to leave this stuff out of the controller and into a directive
-        //
-        // Awesome toggle hack, via:
-        // https://stackoverflow.com/questions/17544048/multi-level-tables-inside-another-if-clicked
-        $scope.toggleChildren = function($index) {
-            $scope.activePosition = $scope.activePosition == $index ? -1 : $index;
-        };
-
+        $scope.updateResults = function(newVal, oldVal){
+          var cleanQuery = boringWordsFilter(newVal);
+          // only do the filter if the filtered query (without boring words)
+          if(cleanQuery !== boringWordsFilter(oldVal)){
+              $scope.search_times[0] = Date.now();
+              $scope.filtered = andFilter($scope.codes, cleanQuery);
+              $scope.search_times[1] = Date.now();
+              $location.search('q', cleanQuery);
+          }
+        }
     });
