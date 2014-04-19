@@ -26,7 +26,7 @@ parents = []
 children = {}
 
 # Exclude from search keywords
-BORING_WORDS = ['and', 'or', 'of', 'on', 'the', 'due', 'to', 'in', 'with', 'without', 'disease']
+BORING_WORDS = ['and', 'or', 'of', 'for', 'on', 'the', 'due', 'to', 'in', 'with', 'without', 'disease']
 
 # Make lowercase, remove special characters, filter boring words.
 def non_boring_words(in_desc):
