@@ -54,7 +54,7 @@ module.exports = function (grunt) {
                     // Manually set the GZIP header, since we custom gzip these files below.
                     // TODO: Increase cache time
                     {expand: true, cwd: 'dist/data/', src: ['**'], dest: 'data/',
-                        params: {CacheControl: '86400', 'ContentType': 'gzip'}}
+                        params: {CacheControl: '86400', 'ContentEncoding': 'gzip', 'ContentType': 'application/json'}}
 
                 ]
             }
