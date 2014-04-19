@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icd10App')
-    .controller('MainCtrl', function ($scope, CodeRetriever, $filter, $location) {
-        $scope.query = "";
+    .controller('MainCtrl', function ($scope, CodeRetriever, $filter, $location, $routeParams) {
+        $scope.query = $routeParams.q;
         $scope.currentLimit = 20;
         $scope.codes = [];
         $scope.totalResults = 0;
@@ -33,7 +33,7 @@ angular.module('icd10App')
         $scope.$watch('query', function(newVal, oldVal){
           cleanQuery = boringWordsFilter($scope.query);
           // only do the filter if the filtered query (without boring words)
-          if(cleanQuery!==boringWordsFilter(oldVal)){
+          if(cleanQuery !== boringWordsFilter(oldVal)){
             $scope.search_times[0] = Date.now();
             $scope.filtered = andFilter($scope.codes, cleanQuery);
             $scope.search_times[1] = Date.now();
