@@ -5,7 +5,8 @@ angular.module('icd10App', ['ngRoute'])
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        reloadOnSearch: false
       })
       .otherwise({
         redirectTo: '/'

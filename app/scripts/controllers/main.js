@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('icd10App')
-    .controller('MainCtrl', function ($scope, CodeRetriever, $filter) {
+    .controller('MainCtrl', function ($scope, CodeRetriever, $filter, $location) {
         $scope.query = "";
         $scope.currentLimit = 20;
         $scope.codes = [];
@@ -18,6 +18,7 @@ angular.module('icd10App')
             $scope.dx_children = data;
           });
         });
+
         // get the filter steps into controller,
         // so tht it can be controlled by a watcher
         // and not be defined by the ng-repeat digest cycle
@@ -36,6 +37,7 @@ angular.module('icd10App')
             $scope.search_times[0] = Date.now();
             $scope.filtered = andFilter($scope.codes, cleanQuery);
             $scope.search_times[1] = Date.now();
+            $location.search('q', cleanQuery);
           }
         });
 
@@ -46,9 +48,5 @@ angular.module('icd10App')
         $scope.toggleChildren = function($index) {
             $scope.activePosition = $scope.activePosition == $index ? -1 : $index;
         };
-
-        // Get child codes later on.
-
-
 
     });
