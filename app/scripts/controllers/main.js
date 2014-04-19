@@ -2,7 +2,7 @@
 
 angular.module('icd10App')
     .controller('MainCtrl', function ($scope, CodeRetriever, $filter, $location, $routeParams) {
-        $scope.query = $routeParams.q;
+        $scope.query = $routeParams.q || "";
         $scope.currentLimit = 20;
         $scope.codes = [];
         $scope.totalResults = 0;
