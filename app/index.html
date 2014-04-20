@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ICD-10 Code Lookup and Search &mdash; by Clindesk, Inc.</title>
@@ -11,71 +11,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-        <!-- endbuild -->
-      <!-- ref:css //netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css -->
-        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-      <!-- endref -->
-     <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <!-- endbuild -->
+    <!-- ref:css //netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- endref -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-       ga('create', 'UA-32988270-1', {'cookieDomain': 'clindesk.org',
-           'siteSpeedSampleRate': 100});
-       ga('require', 'linkid', 'linkid.js');
-       ga('require', 'displayfeatures');
-       ga('send', 'pageview');
+        ga('create', 'UA-32988270-1', {'cookieDomain': 'clindesk.org',
+            'siteSpeedSampleRate': 100});
+        ga('require', 'linkid', 'linkid.js');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
 
-       window.onerror = function(m, u, l) { ga('send', 'event', 'JSError', m, u + ':' + l, null, {'nonInteraction': 1}); };
+        window.onerror = function(m, u, l) { ga('send', 'event', 'JSError', m, u + ':' + l, null, {'nonInteraction': 1}); };
     </script>
 </head>
-  <body ng-app="icd10App">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+<body ng-app="icd10App">
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
 
-    <!--[if lt IE 9]>
-      <script src="bower_components/es5-shim/es5-shim.js"></script>
-      <script src="bower_components/json3/lib/json3.min.js"></script>
-    <<!doctype html>
-    <html lang="en" endif="">
-    <head>
-      <meta charset="UTF-8">
-      <title>Document</title>
-    </head>
-    <body>
+<!--[if lt IE 9]>
+  <script src="bower_components/es5-shim/es5-shim.js"></script>
+  <script src="bower_components/json3/lib/json3.min.js"></script>
+<<!doctype html>
+<html lang="en" endif="">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
 
-    </body>
-    </html>
+</body>
+</html>
 
-    <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
+<!-- Add your site or application content here -->
+<div class="container" ng-view=""></div>
 
-    <!-- ref:js //ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js -->
-      <script src="bower_components/angular/angular.js"></script>
-    <!-- endref -->
+<!-- ref:js //ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js -->
+<script src="bower_components/angular/angular.js"></script>
+<!-- endref -->
 
-    <!-- ref:js //ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-cookies.min.js -->
-        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <!-- endref -->
+<!-- ref:js //ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-cookies.min.js -->
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<!-- endref -->
 
-    <!-- ref:js //ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js -->
-        <script src="bower_components/angular-route/angular-route.js"></script>
-    <!-- endref -->
+<!-- ref:js //ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js -->
+<script src="bower_components/angular-route/angular-route.js"></script>
+<!-- endref -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/constants.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/services/CodeRetriever.js"></script>
-        <script src="scripts/directives/ng-debounce.js"></script>
-        <script src="scripts/filters/andFilter.js"></script>
-        <script src="scripts/filters/boringWords.js"></script>
-        <script src="scripts/directives/codeChildren.js"></script>
-        <!-- endbuild -->
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/constants.js"></script>
+<script src="scripts/controllers/main.js"></script>
+<script src="scripts/services/CodeRetriever.js"></script>
+<script src="scripts/directives/ng-debounce.js"></script>
+<script src="scripts/filters/andFilter.js"></script>
+<script src="scripts/filters/boringWords.js"></script>
+<script src="scripts/directives/codeChildren.js"></script>
+<!-- endbuild -->
 </body>
 </html>
