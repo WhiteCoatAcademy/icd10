@@ -48,13 +48,15 @@ module.exports = function (grunt) {
 
                     // Upload all files (except big JSON data) w/ a 1 hour cache time
                     {expand: true, cwd: 'dist/', src: ['**', "!data/*"], dest: '',
-                        params: {CacheControl: '3600'}},
+                        params: {CacheControl: 'max-age=3600'}},
 
                     // Upload big JSON data files with a 1 day cache time
                     // Manually set the GZIP header, since we custom gzip these files below.
                     // TODO: Increase cache time
                     {expand: true, cwd: 'dist/data/', src: ['**'], dest: 'data/',
-                        params: {CacheControl: '86400', 'ContentEncoding': 'gzip', 'ContentType': 'application/json'}}
+                        params: {CacheControl: 'max-age=86400',
+                                'ContentEncoding': 'gzip',
+                                'ContentType': 'application/json'}}
 
                 ]
             }
