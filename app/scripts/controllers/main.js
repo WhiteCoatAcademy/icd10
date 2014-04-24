@@ -38,7 +38,11 @@ angular.module('icd10App')
 
         $scope.search_times = [0,0];
         $scope.$watch('query', function(newVal, oldVal){
-          $scope.updateResults(newVal, oldVal)
+          $scope.updateResults(newVal, oldVal);
+          // Send event to GA
+          if(newVal !== oldVal && newVal !== '') {
+            ga('send', 'event', 'q', newVal);
+          }
         });
         // IE8 shim
         if (!Date.now) {
