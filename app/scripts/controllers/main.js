@@ -40,7 +40,10 @@ angular.module('icd10App')
         $scope.$watch('query', function(newVal, oldVal){
           $scope.updateResults(newVal, oldVal)
         });
-
+        // IE8 shim
+        if (!Date.now) {
+            Date.now = function() { return new Date().getTime(); };
+        }
         $scope.updateResults = function(newVal, oldVal){
           var cleanQuery = boringWordsFilter(newVal);
           // only do the filter if the filtered query (without boring words)
