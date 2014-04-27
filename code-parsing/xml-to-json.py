@@ -59,7 +59,7 @@ for item in huge_xml_dict:
             # Some rare entries are just stub <sections>
             for line in entry['diag']:
                 # These are our parent diagnosis entries
-                working_parent = {'c': line['name'], 'd': line['desc'], 'm': []}
+                working_parent = {'c': line['name'][0], 'd': line['desc'], 'm': []}
                 keywords = set()
                 [keywords.add(word) for word in non_boring_words(line['desc'][0])]
                 inclusion_keywords = set()
@@ -83,5 +83,5 @@ for item in huge_xml_dict:
 # print(children)
 
 
-#print(json.dumps(parents))
-print(json.dumps(children, sort_keys=True))
+print(json.dumps(parents))
+# print(json.dumps(children, sort_keys=True))
