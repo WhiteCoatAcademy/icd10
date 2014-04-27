@@ -25,5 +25,10 @@ body {
     background-color: #eee !important;
 }
 
+.child-row li {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
 .ui-match { background: yellow; }
 .ui-gray {color: gray;}
