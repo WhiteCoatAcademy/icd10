@@ -24,3 +24,6 @@ body {
 .child-row {
     background-color: #eee !important;
 }
+
+.ui-match { background: yellow; }
+.ui-gray {color: gray;}
