@@ -7,7 +7,7 @@ angular.module('icd10App')
         $scope.codes = [];
         $scope.totalResults = 0;
         $scope.filtered = [];
-
+        console.log($routeParams)
         // we are binding to scope variables here, but this kind of thing can be handled
         // with $broadcast of loading events. That is better if there are multiple controllers
         // or if we want global awareness of loading
