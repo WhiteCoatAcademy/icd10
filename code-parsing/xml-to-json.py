@@ -68,11 +68,12 @@ for item in huge_xml_dict:
                 if 'diag' in line:
                     for subline in line['diag']:
                         [keywords.add(word) for word in non_boring_words(subline['desc'][0])]
-                        children[subline['name'][0]] = subline['desc'][0]
+                        children[subline['name'][0]] = {'d': subline['desc'][0], 'i': []}
                         working_parent['m'].append(subline['name'][0])
                         try:
                             for entry in subline['inclusionTerm'][0]['note']:
                                 [inclusion_keywords.add(word) for word in non_boring_words(entry)]
+                                children[subline['name'][0]]['i'].append(entry)
                         except IndexError:
                             pass  # No inclusion terms
 
