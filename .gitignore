@@ -10,3 +10,4 @@ dist
 .sass-cache
 app/bower_components
 aws-keys.json
+app/data/*.json
