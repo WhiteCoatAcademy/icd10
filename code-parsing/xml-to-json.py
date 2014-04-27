@@ -50,27 +50,31 @@ children = {}
 # children is a dict of:
 # {'A00.01': "Cholera due to ..."}
 
-# Well, this is a huge hackjob, but we only do it ~once.
+# Well, this is a huge hackjob :/ but we only do it ~once.
 for item in huge_xml_dict:
     for entry in item['section']:
-        print("New section!")
         if 'diag' in entry:
-            print('Diag is in entry. Along with these keys: %s' % (entry.keys()))
             # Some rare entries are just stub <sections>
-            print('Entry diag is: %s' % (entry['diag']))
-            for line in entry['diag']:
-                print(line)
-            for line in entry['diag']:
-                # These are our parent diagnosis entries
-                working_parent = {'c': line['name'], 'd': line['desc'], 'm': []}
+            if 'name' in entry['diag']:
+                # This means we're in a one-deep <section> that we handle differently
+                pass
+            else:
+                for line in entry['diag']:
+                    # These are our parent diagnosis entries
+                    working_parent = {'c': line['name'], 'd': line['desc'], 'm': []}
 
-                # Some codes, e.g. "Nosocomial condition" don't have nested diags.
-                if 'diag' in line:
-                    for subline in line['diag']:
-                        children[subline['name']] = subline['desc']
-                        working_parent['m'].append(subline['name'])
+                    # Some codes, e.g. "Nosocomial condition" don't have nested diags.
+                    if 'diag' in line:
+                        # Again, weird one-deep components that are improperly parsed
+                        if 'name' in line['diag']:
+                            print("NAME")
+                            print(line['diag'])
+                        else:
+                            for subline in line['diag']:
+                                children[subline['name']] = subline['desc']
+                                working_parent['m'].append(subline['name'])
 
-                parents.append(working_parent)
+                    parents.append(working_parent)
 
 
 print(parents)
