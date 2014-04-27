@@ -26,7 +26,7 @@ assert(os.path.isfile(in_xml))
 
 
 # Exclude from search keywords
-BORING_WORDS = ['and', 'or', 'of', 'for', 'on', 'the', 'due', 'to', 'in', 'with', 'without', 'disease']
+BORING_WORDS = ['and', 'or', 'of', 'for', 'on', 'the', 'due', 'to', 'in', 'not', 'as', 'with', 'without', 'disease']
 
 # Make lowercase, remove special characters, filter boring words.
 def non_boring_words(in_desc):
@@ -80,8 +80,6 @@ for item in huge_xml_dict:
                 working_parent['i'] = ' '.join(inclusion_keywords)
                 parents.append(working_parent)
 
-# print(children)
 
-
-print(json.dumps(parents))
-# print(json.dumps(children, sort_keys=True))
+#print(json.dumps(parents))
+print(json.dumps(children, sort_keys=True))
