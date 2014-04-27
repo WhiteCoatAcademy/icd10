@@ -6,6 +6,18 @@
   <div class="form-group">
 		<input type="text" class="form-control" ng-model="query" ng-debounce="200"/>
 		<p ng-show="query.length<3" class="help-block">Search string must be 3 or more characters</p>
+		<label class="checkbox-inline">
+		  <input type="checkbox" ng-model="searchPreferences.codeParent.isSearching"> Code
+		</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" ng-model="searchPreferences.codeChildren.isSearching"> Code Children
+		</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" ng-model="searchPreferences.description.isSearching"> Description
+		</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" ng-model="searchPreferences.keyword.isSearching"> Keyword
+		</label>
 	</div>
 </form>
 <div ng-show="query.length>2">
