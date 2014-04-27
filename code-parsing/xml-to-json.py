@@ -81,5 +81,5 @@ for item in huge_xml_dict:
                 parents.append(working_parent)
 
 
-#print(json.dumps(parents))
-print(json.dumps(children, sort_keys=True))
+print(json.dumps(parents), file=open('diagnosis_parents.json', 'wb'))
+print(json.dumps(children, sort_keys=True), file=open('diagnosis_children.json', 'wb'))
