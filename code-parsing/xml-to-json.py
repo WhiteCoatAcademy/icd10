@@ -57,85 +57,31 @@ for item in huge_xml_dict:
     for entry in item['section']:
         if 'diag' in entry:
             # Some rare entries are just stub <sections>
-            if 'name' in entry['diag']:
-                # This means we're in a one-deep <section> that we handle differently
-                pass
-            else:
-                for line in entry['diag']:
-                    # These are our parent diagnosis entries
-                    working_parent = {'c': line['name'], 'd': line['desc'], 'm': []}
-                    keywords = set()
-                    [keywords.add(word) for word in non_boring_words(line['desc'][0])]
-                    inclusion_keywords = set()
-
-                    # Some codes, e.g. "Nosocomial condition" don't have nested diags.
-                    if 'diag' in line:
-                        for subline in line['diag']:
-                            [keywords.add(word) for word in non_boring_words(subline['desc'][0])]
-                            children[subline['name'][0]] = subline['desc'][0]
-                            working_parent['m'].append(subline['name'][0])
-                            try:
-                                for entry in subline['inclusionTerm'][0]['note']:
-                                   [inclusion_keywords.add(word) for word in non_boring_words(entry)]
-                            except IndexError:
-                                pass  # No inclusion terms
-
-                    working_parent['k'] = ' '.join(keywords)
-                    working_parent['i'] = ' '.join(inclusion_keywords)
-                    parents.append(working_parent)
-
-
-print(parents)
-#['diag'][0]
-
-
-
-exit()
-
-with open(in_tsv,'rb') as tsvin:
-    tsvin = csv.reader(tsvin, delimiter=str('\t'))
-    list_of_children = []  # Temporarily hold parent->child mapping
-    working_parent = None
-    keywords = set()
-    for row in tsvin:
-        # Search keywords
-
-
-        # Choose "long" description, if available
-        description = row[3]
-        if len(row[4]) > len(row[3]):
-            description = row[4]
-
-        if row[2] == "0":  # Parent
-            if working_parent != None:
-                # We have a new parent. Let's add the old one to the array.
-
-                # There are some "super parents" -- ignore them for now.
-                # 00110   A18     0       Tuberculosis of other organs
-                # 00111   A180    0       Tuberculosis of bones and joints
-                if len(list_of_children) > 0:
-                    working_parent['k'] = ' '.join(keywords)
-                    working_parent['m'] = list_of_children
-                    parents.append(working_parent)
+            for line in entry['diag']:
+                # These are our parent diagnosis entries
+                working_parent = {'c': line['name'], 'd': line['desc'], 'm': []}
                 keywords = set()
+                [keywords.add(word) for word in non_boring_words(line['desc'][0])]
+                inclusion_keywords = set()
 
-            working_parent = {'c': row[1], 'd': description}  # Temporary, later added to parents
-            [keywords.add(word) for word in non_boring_words(description)]
-            list_of_children = []
-        elif row[2] == "1":
-            [keywords.add(word) for word in non_boring_words(description)]
-            # children[row[1]] = {'d': description} # If we want to expand, later
-            children[row[1]] = description
-            list_of_children.append(row[1])
-        else:
-            print(row[2])
-            assert(False)
+                # Some codes, e.g. "Nosocomial condition" don't have nested diags.
+                if 'diag' in line:
+                    for subline in line['diag']:
+                        [keywords.add(word) for word in non_boring_words(subline['desc'][0])]
+                        children[subline['name'][0]] = subline['desc'][0]
+                        working_parent['m'].append(subline['name'][0])
+                        try:
+                            for entry in subline['inclusionTerm'][0]['note']:
+                                [inclusion_keywords.add(word) for word in non_boring_words(entry)]
+                        except IndexError:
+                            pass  # No inclusion terms
 
-    # Messy, but catch the last parent.
-    working_parent['k'] = ' '.join(keywords)
-    working_parent['m'] = list_of_children
-    parents.append(working_parent)
+                working_parent['k'] = ' '.join(keywords)
+                working_parent['i'] = ' '.join(inclusion_keywords)
+                parents.append(working_parent)
+
+print(children)
 
 
-print(json.dumps(parents))
+# print(json.dumps(parents))
 # print(json.dumps(children, sort_keys=True))
