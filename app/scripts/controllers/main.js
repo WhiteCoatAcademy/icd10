@@ -9,10 +9,9 @@ angular.module('icd10App')
         $scope.filtered = [];
 
         $scope.searchPreferences = {
-          codeParent: {key: 'c', isSearching:false},
-          codeChildren: {key:'m', isSearching: false},
+          codeParent: {key: ['c','m'], isSearching:true},
           description: {key:'d', isSearching: true},
-          keyword: {key:'k', isSearching: true}
+          keyword: {key:['k','i'], isSearching: true}
         }
 
         // we are binding to scope variables here, but this kind of thing can be handled
@@ -60,7 +59,8 @@ angular.module('icd10App')
         }, true)
 
         $scope.updateSearchKeysArray = function(){
-          $scope.filterKeysArray = _.pluck(_.filter($scope.searchPreferences, function(value){return value.isSearching}), 'key');
+          $scope.filterKeysArray = _.flatten(_.pluck(_.filter($scope.searchPreferences, function(value){return value.isSearching}), 'key'));
+          console.log($scope.filterKeysArray)
           $scope.updateResults(boringWordsFilter($scope.query));
         }
 
