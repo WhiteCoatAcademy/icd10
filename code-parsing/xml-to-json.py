@@ -65,32 +65,27 @@ for item in huge_xml_dict:
                     # These are our parent diagnosis entries
                     working_parent = {'c': line['name'], 'd': line['desc'], 'm': []}
                     keywords = set()
-                    [keywords.add(word) for word in non_boring_words(line['desc'])]
+                    [keywords.add(word) for word in non_boring_words(line['desc'][0])]
                     inclusion_keywords = set()
 
                     # Some codes, e.g. "Nosocomial condition" don't have nested diags.
                     if 'diag' in line:
-                        # Again, weird one-deep components that are improperly parsed
-                        if 'name' in line['diag']:
-                            pass
-                        else:
-                            for subline in line['diag']:
-                                [keywords.add(word) for word in non_boring_words(subline['desc'])]
-                                children[subline['name']] = subline['desc']
-                                working_parent['m'].append(subline['name'])
-                                try:
-                                    for note in subline['inclusionTerm'].itervalues():
-                                        print(note)
-                                        [inclusion_keywords.add(word) for word in non_boring_words(note)]
-                                except KeyError:
-                                    pass
+                        for subline in line['diag']:
+                            [keywords.add(word) for word in non_boring_words(subline['desc'][0])]
+                            children[subline['name'][0]] = subline['desc'][0]
+                            working_parent['m'].append(subline['name'][0])
+                            try:
+                                for entry in subline['inclusionTerm'][0]['note']:
+                                   [inclusion_keywords.add(word) for word in non_boring_words(entry)]
+                            except IndexError:
+                                pass  # No inclusion terms
 
                     working_parent['k'] = ' '.join(keywords)
                     working_parent['i'] = ' '.join(inclusion_keywords)
                     parents.append(working_parent)
 
 
-#print(parents)
+print(parents)
 #['diag'][0]
 
 
