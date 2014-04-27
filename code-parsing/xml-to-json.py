@@ -13,6 +13,7 @@
 #
 
 from __future__ import absolute_import, division, print_function, unicode_literals
+from collections import defaultdict
 import json
 import sys
 import os
@@ -38,7 +39,8 @@ def non_boring_words(in_desc):
 
 
 # Scope to 'chapters' which contain big 'section's of 'diag's and individual codes
-huge_xml_dict = xmltodict.parse(open(in_xml))['ICD10CM.tabular']['chapter']
+huge_xml_dict = xmltodict.parse(open(in_xml),
+                                dict_constructor=lambda *args, **kwargs: defaultdict(list, *args, **kwargs))['ICD10CM.tabular'][0]['chapter']
 
 
 parents = []
@@ -62,22 +64,33 @@ for item in huge_xml_dict:
                 for line in entry['diag']:
                     # These are our parent diagnosis entries
                     working_parent = {'c': line['name'], 'd': line['desc'], 'm': []}
+                    keywords = set()
+                    [keywords.add(word) for word in non_boring_words(line['desc'])]
+                    inclusion_keywords = set()
 
                     # Some codes, e.g. "Nosocomial condition" don't have nested diags.
                     if 'diag' in line:
                         # Again, weird one-deep components that are improperly parsed
                         if 'name' in line['diag']:
-                            print("NAME")
-                            print(line['diag'])
+                            pass
                         else:
                             for subline in line['diag']:
+                                [keywords.add(word) for word in non_boring_words(subline['desc'])]
                                 children[subline['name']] = subline['desc']
                                 working_parent['m'].append(subline['name'])
+                                try:
+                                    for note in subline['inclusionTerm'].itervalues():
+                                        print(note)
+                                        [inclusion_keywords.add(word) for word in non_boring_words(note)]
+                                except KeyError:
+                                    pass
 
+                    working_parent['k'] = ' '.join(keywords)
+                    working_parent['i'] = ' '.join(inclusion_keywords)
                     parents.append(working_parent)
 
 
-print(parents)
+#print(parents)
 #['diag'][0]
 
 
