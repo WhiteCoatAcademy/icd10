@@ -25,6 +25,7 @@
 	<i ng-show="!isParentDataLoaded" class="fa fa-spinner fa-spin"></i>
 
 	<div ng-show="isParentDataLoaded">
+
 		<h3>Results ({{filtered.length}}), {{search_times[1]-search_times[0]}} ms</h3>
 		<table class="table">
 			<thead>
@@ -36,7 +37,7 @@
 			<tbody >
 				<tr ng-click="isCodeChildVisible=!isCodeChildVisible" ng-repeat-start = "code in filtered | limitTo:currentLimit track by $index">
 					<td>{{code.c}}</td>
-					<td>{{code.d}}</td>
+					<td><p ng-bind-html="code.d | highlight:query:false:'ui-match'"></p></td>
 				</tr>
 	      <tr class="child-row" code-children ng-show="isCodeChildVisible && isChildrenDataLoaded">
 	      </tr>

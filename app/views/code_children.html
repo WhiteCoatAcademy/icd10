@@ -5,6 +5,6 @@
 </td>
 <td>
   <ul class="list-unstyled">
-    <li ng-repeat="m in code.m">{{dx_children[m]}}</li>
+    <li ng-repeat="m in code.m"><p ng-bind-html="dx_children[m]| highlight:code.d:false:'ui-gray'"></p></li>
   </ul>
 </td>
