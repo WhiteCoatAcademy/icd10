@@ -16,7 +16,15 @@ angular.module('icd10App')
       if (caseSensitive) {
         return text.split(search).join('<span class="'+cssClass+'">' + search + '</span>');
       } else {
-        return text.replace(new RegExp(search, 'gi'), '<span class="'+cssClass+'">$&</span>');
+
+        _.each(search.split(' '), function(word){
+          if(word.length>1){
+            text = text.replace(new RegExp(word, 'gi'), '####$&????');
+          }
+          text = text.replace('####', '<span class="'+cssClass+'">');
+          text = text.replace('????', '</span>');
+        })
+        return text;
       }
     } else {
       return text;
