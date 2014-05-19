@@ -77,6 +77,25 @@ for item in huge_xml_dict:
                         except IndexError:
                             pass  # No inclusion terms
 
+                        # This should really be a recursive parsing, but ... hackjob!
+                        # DUPLICATE CODE (from above) -- HACKJOB
+                        if 'diag' in subline:
+                            for entry in subline['diag']:
+                                # Entry is a dict with keys:
+                                #  name
+                                #  desc
+                                #  inclusionTerm[0]['note'] <- optional
+                                [keywords.add(word) for word in non_boring_words(entry['desc'][0])]
+                                children[entry['name'][0]] = {'d': entry['desc'][0], 'i': []}  # I am suspicious of this line.
+                                working_parent['m'].append(entry['name'][0])
+                                try:
+                                    for incl_entry in entry['inclusionTerm'][0]['note']:
+                                        [inclusion_keywords.add(word) for word in non_boring_words(incl_entry)]
+                                        children[entry['name'][0]]['i'].append(incl_entry)
+                                except IndexError:
+                                    pass  # No inclusion terms
+
+
                 working_parent['k'] = ' '.join(keywords)
                 working_parent['i'] = ' '.join(inclusion_keywords)
                 parents.append(working_parent)
