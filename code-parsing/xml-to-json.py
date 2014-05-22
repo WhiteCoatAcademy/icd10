@@ -95,6 +95,19 @@ for item in huge_xml_dict:
                                 except IndexError:
                                     pass  # No inclusion terms
 
+                                # OK, this is truly the final depth. Holy crap why did I not recursively...whatever.
+                                if 'diag' in entry:
+                                    for nested_entry in entry['diag']:
+                                        [keywords.add(word) for word in non_boring_words(nested_entry['desc'][0])]
+                                        children[nested_entry['name'][0]] = {'d': nested_entry['desc'][0], 'i': []}  # I am suspicious of this line.
+                                        working_parent['m'].append(nested_entry['name'][0])
+                                        try:
+                                            for incl_entry in nested_entry['inclusionTerm'][0]['note']:
+                                                [inclusion_keywords.add(word) for word in non_boring_words(incl_entry)]
+                                                children[nested_entry['name'][0]]['i'].append(incl_entry)
+                                        except IndexError:
+                                            pass  # No inclusion terms
+
 
                 working_parent['k'] = ' '.join(keywords)
                 working_parent['i'] = ' '.join(inclusion_keywords)
