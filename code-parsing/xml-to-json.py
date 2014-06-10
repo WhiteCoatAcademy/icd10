@@ -32,7 +32,7 @@ BORING_WORDS = ['and', 'or', 'of', 'for', 'on', 'the', 'due', 'to', 'in', 'not',
 def non_boring_words(in_desc):
     clean_desc = re.sub('[^A-Za-z0-9\s]+', '', in_desc)
     each_word = clean_desc.split()
-    long_words = [w for w in each_word if len(w) > 1]  # Ignore single characters.
+    long_words = [w for w in each_word] #  if len(w) > 1 # Ignore single characters.
     lower_case = [l.lower() for l in long_words]
     good_words = [str(w) for w in lower_case if w not in BORING_WORDS]
     return good_words
