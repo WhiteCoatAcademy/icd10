@@ -22,7 +22,7 @@ body {
 }
 
 .child-row {
-    background-color: #eee !important;
+    background-color: whitesmoke !important;
 }
 
 .child-row li {
@@ -31,4 +31,7 @@ body {
 }
 
 .ui-match { background: yellow; }
+
+.ui-gray > .ui-match {background:none!important;}
 .ui-gray {color: gray;}
+
