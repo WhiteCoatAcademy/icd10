@@ -36,7 +36,7 @@
 					<td>{{code.c}}</td>
 					<td><p ng-bind-html="code.d | highlight:query:false:'ui-match'"></p></td>
 				</tr>
-	      <tr class="child-row" code-children ng-show="isCodeChildVisible && isChildrenDataLoaded">
+	      <tr ng-if="isChildrenDataLoaded" class="child-row" code-children>
 	      </tr>
 	      <tr ng-show="isCodeChildVisible && !isChildrenDataLoaded" ng-repeat-end>
 	      	<td col-width="2"><i class="fa fa-spinner fa-spin"></i></td>
