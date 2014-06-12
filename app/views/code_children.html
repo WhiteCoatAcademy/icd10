@@ -1,10 +1,3 @@
-<td>
-  <ul class="list-unstyled">
-    <li ng-repeat="m in code.m">{{m}}</li>
-  </ul>
-</td>
-<td>
-  <ul class="list-unstyled">
-    <li ng-repeat="m in code.m"><p ng-bind-html="dx_children[m]['d'] | highlight:code.d:false:'ui-gray'"></p></li>
-  </ul>
+<td colspan="2">
+	<abn-tree query="query" root-code = "code.d" tree-control="my_tree" tree-data="familyTree"></abn-tree>
 </td>
