@@ -60,13 +60,11 @@ angular.module('icd10App')
 
         $scope.updateSearchKeysArray = function(){
           $scope.filterKeysArray = _.flatten(_.pluck(_.filter($scope.searchPreferences, function(value){return value.isSearching}), 'key'));
-          console.log($scope.filterKeysArray)
           $scope.updateResults(boringWordsFilter($scope.query));
         }
 
         $scope.updateResults = function(cleanQuery){
           $scope.search_times[0] = Date.now();
-          console.log($scope.filterKeysArray);
           $scope.filtered = andFilter($scope.codes, cleanQuery, $scope.filterKeysArray);
           $scope.search_times[1] = Date.now();
           $location.search('q', cleanQuery);
