@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('icd10App', ['ngRoute','ngSanitize'])
+angular.module('icd10App', ['ngRoute','ngSanitize','angularBootstrapNavTree'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
